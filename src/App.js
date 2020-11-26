@@ -7,24 +7,27 @@ import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import Home from "./components/pages/Home";
 import AuthState from "./context/auth/authState";
 import ContactState from "./context/Contact/ContactState";
+import StyleState from "./context/style/StyleState";
 
 function App() {
   return (
     // Wrapper
-    <AuthState>
-      <ContactState>
-        <BrowserRouter>
-          <div className="App">
-            <NavBar />
-            <Switch>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/register" component={Register} />
-            </Switch>
-          </div>
-        </BrowserRouter>
-      </ContactState>
-    </AuthState>
+    <StyleState>
+      <AuthState>
+        <ContactState>
+          <BrowserRouter>
+            <div className="App">
+              <NavBar />
+              <Switch>
+                <Route exact path="/" component={Home} />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+              </Switch>
+            </div>
+          </BrowserRouter>
+        </ContactState>
+      </AuthState>
+    </StyleState>
   );
 }
 

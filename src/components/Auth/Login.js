@@ -1,47 +1,52 @@
-import React, { useState, useContext } from 'react';
-import Alert from '../UI/Alert';
-import {Redirect } from 'react-router-dom'
-import AuthContext from './../../context/auth/AuthContext'
+import React, { useState, useContext } from "react";
+import Alert from "../UI/Alert";
+import { Redirect } from "react-router-dom";
+import AuthContext from "./../../context/auth/AuthContext";
+import StyleContext from "./../../context/style/StyleContext";
+import ToggleTheme from "./../toggleTheme/ToggleTheme";
 
 export default function Login() {
   const [credentials, setCredentials] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   // create context variable
-  const authContext = useContext(AuthContext)
+  const authContext = useContext(AuthContext);
+  const styleContext = useContext(StyleContext);
+  const { isLight, light, dark } = styleContext;
+  const theme = isLight ? light : dark;
+  const { login, error, isAuthenticated } = authContext;
 
-  const { login , error , isAuthenticated} = authContext
-
-  const { email , password} = credentials
+  const { email, password } = credentials;
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-
   const handleSubmit = (e) => {
-    e.preventDefault()
-    if(email === '' || password === '') {
-      alert('please fill all fields')
+    e.preventDefault();
+    if (email === "" || password === "") {
+      alert("please fill all fields");
     } else {
-      console.log(credentials)
+      console.log(credentials);
       // call login function
-      login(credentials)
+      login(credentials);
     }
+  };
+
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
   }
 
-
-  if(isAuthenticated) {
-    return <Redirect to='/' />
-
-  }
-
- 
   return (
-    <div className="d-flex justify-content-center mt-5">
-      <form class="text-center border border-light p-5 w-50" 
+    <div
+      className="d-flex justify-content-center mt-5"
+      style={{ backgroundColor: theme.backgroundColor, color: theme.color }}
+    >
+      <ToggleTheme />
+      <form
+        class="text-center border border-light p-5 w-50"
         onSubmit={handleSubmit}
       >
         <p class="h4 mb-4">Account Login</p>
@@ -58,7 +63,7 @@ export default function Login() {
 
         <label> Password </label>
         <input
-                onChange={handleChange}
+          onChange={handleChange}
           type="password"
           name="password"
           id="defaultLoginFormPassword"
@@ -67,8 +72,7 @@ export default function Login() {
           placeholder="Password"
         />
 
-        
-<button class="btn btn-info btn-block my-4" type="submit">
+        <button class="btn btn-info btn-block my-4" type="submit">
           Login
         </button>
       </form>
