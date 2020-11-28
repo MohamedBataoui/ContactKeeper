@@ -5,7 +5,7 @@ import ContactReducer from "./ContactReducer";
 import ContactContext from "./ContactContext";
 
 // types
-import { GET_ALL_CONTACTS } from "./../types";
+import { GET_ALL_CONTACTS, ADD_CONTACT } from "./../types";
 
 const data = [
   { name: "ayoub", email: "ayoub@gmail.com", phone: "0623584965" },
@@ -46,7 +46,7 @@ const ContactState = ({ children }) => {
       };
 
       const response = await axios.post(`/api/contacts`, contact, config);
-
+      dispatch({ type: ADD_CONTACT, payload: response.data });
       console.log(response);
     } catch (error) {
       console.log(error);

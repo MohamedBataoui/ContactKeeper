@@ -48,7 +48,6 @@ export default function ContactForm(action) {
       email,
       phone,
     };
-    console.log(data);
     createContact(data);
   };
 
