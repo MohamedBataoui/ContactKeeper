@@ -7,10 +7,15 @@ import ContactContext from "./ContactContext";
 // types
 import { GET_ALL_CONTACTS } from "./../types";
 
+const data = [
+  { name: "ayoub", email: "ayoub@gmail.com", phone: "0623584965" },
+  { name: "munir", email: "munir@gmail.com", phone: "0612584569" },
+  { name: "taha", email: "taha@gmail.com", phone: "0612458963" },
+];
 const ContactState = ({ children }) => {
   // creation state
   const initialState = {
-    allContact: [],
+    allContact: data,
   };
 
   // creation reducer
@@ -25,7 +30,6 @@ const ContactState = ({ children }) => {
       },
     };
     const res = await axios.get("/api/contacts", config);
-    console.log(res);
     dispatch({
       type: GET_ALL_CONTACTS,
       payload: res.data,
@@ -33,16 +37,20 @@ const ContactState = ({ children }) => {
   };
 
   const createContact = async (contact) => {
-    const config = {
-      headers: {
-        "Content-Type": "application/json",
-        "x-auth-token": localStorage.getItem("token"),
-      },
-    };
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          "x-auth-token": localStorage.getItem("token"),
+        },
+      };
 
-    const response = await axios.post(`/api/contacts`, contact, config);
+      const response = await axios.post(`/api/contacts`, contact, config);
 
-    console.log(response);
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // login

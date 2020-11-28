@@ -7,15 +7,12 @@ import AuthContext from "./../../context/auth/AuthContext";
 import ContactContext from "../../context/Contact/ContactContext";
 
 function Home() {
-  const contactContext = useContext(ContactContext);
   const authContext = useContext(AuthContext);
   const { isAuthenticated, loadUser } = authContext;
 
-  const { loadContacts } = contactContext;
-
   useEffect(() => {
     loadUser();
-    loadContacts();
+    //loadContacts();
   }, []);
 
   if (isAuthenticated === null) {

@@ -44,7 +44,7 @@ const AuthState = ({ children }) => {
       console.log(error);
       dispatch({
         type: LOGIN_FAIL,
-        payload: error.response.data.msg,
+        payload: error.response,
       });
     }
   };
